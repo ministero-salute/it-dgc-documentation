@@ -1,4 +1,4 @@
-<h1 align="center">Digital Green Certificate Template</h1>
+<h1 align="center">Digital Green Certificate High-Level Description</h1>
 
 <div align="center">
 <img width="256" height="256" src="img/logo-dcg.png">
@@ -50,9 +50,9 @@ Contributions are most welcome. Before proceeding, please read the [Code of Cond
 ## Contributors
 Here is a list of contributors. Thank you to everyone involved for improving this project, day by day.
 
-<a href="https://github.com/REPO(Ex. ministero-salute/it-eucert-gateway-client)">
+<a href="https://github.com/ministero-salute/it-dgc-documentation">
   <img
-  src="https://contributors-img.web.app/image?repo=REPO(Ex. ministero-salute/it-eucert-gateway-client)"
+  src="https://contributors-img.web.app/image?repo=ministero-salute/it-dgc-documentation"
   />
 </a>
 
