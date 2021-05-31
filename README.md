@@ -26,46 +26,28 @@
 
 # Table of contents
 
-- [Context](#context)
-- [Installation](#installation)
-- [Contributing](#contributing)
-  - [Contributors](#contributors)
-- [Licence](#licence)
-  - [Authors / Copyright](#authors--copyright)
-  - [Third-party component licences](#third-party-component-licences)
-  - [Licence details](#licence-details)
+- [Executive summary](#summary)
+- [Introduction](#introduction)
+- [Vision and goals](#vision-and-goals)
+- [Principles](#principles)
+- [Product](#product)
+  - [How it works](#product--how-it-works)
+- [Privacy](#privacy)
 
 
 # Context
 
-**Please take the time to read and consider the other repositories in full before digging into the source code or opening an Issue. They contain a lot of details that are fundamental to understanding the source code and this repository's documentation.**
+# Executive summary
 
-# Installation
+# Introduction
 
-### Prerequisites
+# Vision and goals
 
-# Contributing
-Contributions are most welcome. Before proceeding, please read the [Code of Conduct](./CODE_OF_CONDUCT.md) for guidance on how to approach the community and create a positive environment. Additionally, please read our [CONTRIBUTING](./CONTRIBUTING.md) file, which contains guidance on ensuring a smooth contribution process.
+# Principles
 
-## Contributors
-Here is a list of contributors. Thank you to everyone involved for improving this project, day by day.
 
-<a href="https://github.com/ministero-salute/it-dgc-documentation">
-  <img
-  src="https://contributors-img.web.app/image?repo=ministero-salute/it-dgc-documentation"
-  />
-</a>
+# Product
 
-# Licence
+## How it works
 
-## Authors / Copyright
-
-Copyright 2021 (c) Ministero della Salute.
-
-Please check the [AUTHORS](AUTHORS) file for extended reference.
-
-## Third-party component licences
-
-## Licence details
-
-The licence for this repository is a [GNU Affero General Public Licence version 3](https://www.gnu.org/licenses/agpl-3.0.html) (SPDX: AGPL-3.0). Please see the [LICENSE](LICENSE) file for full reference.
+# Privacy
