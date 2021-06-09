@@ -17,7 +17,7 @@
 
 
 # Introduction
-The Digital Green Certificate (DGC) is introduced by a proposal for a European Regulation of March 17, 2021, whose approval is expected in June 2021, as a flexible tool to facilitate the free movement between Member States, through a constant reassessment of the level of risk of spread of infection in relation essentially to the effects of immunization resulting from vaccination and a proven recovery, as well as the results of a reliable test (molecular and / or antigenic) with respect to the ability to transmit the SARS-CoV-2 virus.
+TheEU Digital COVID Certificate (DCC) is introduced by a proposal for a European Regulation of March 17, 2021, whose approval is expected in June 2021, as a flexible tool to facilitate the free movement between Member States, through a constant reassessment of the level of risk of spread of infection in relation essentially to the effects of immunization resulting from vaccination and a proven recovery, as well as the results of a reliable test (molecular and / or antigenic) with respect to the ability to transmit the SARS-CoV-2 virus.
 
 The following documentation refers to the national solution for the generation, distribution and verification of certificates in compliance with the provisions of the European regulation and the subsequent activation of interoperability with other states of the union.
 
