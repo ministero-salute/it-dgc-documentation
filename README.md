@@ -1,4 +1,4 @@
-<h1 align="center">Digital Green Certificate's High-Level Description</h1>
+<h1 align="center">EU Digital COVID Certificate's High-Level Description</h1>
 
 <div align="center">
 <img width="256" height="256" src="img/logo-dcg.png">
