@@ -13,11 +13,10 @@
 - [Principles](#principles)
 - [Product](#product)
   - [How it works](#product--how-it-works)
-- [Privacy](#privacy)
 
 
 # Introduction
-On 17 March 2021, the European Commission issued a proposal for a Regulation on a 'Digital Covid Certificate' (DCC) to be in use from 1 July 2021, The certificate is conceived as a flexible tool to facilitate the free movement between Member States, through a constant reassessment of the level of risk of infection by evaluating the effects of immunization resulting from vaccination, proven recovery, as well as the results of reliable testing (molecular and / or antigenic).
+On 17 March 2021, the European Commission issued a proposal for a Regulation on a 'Digital Covid Certificate' (DCC) to be in use from 1 July 2021, The certificate is conceived as a flexible tool to facilitate the free movement between Member States, through a constant reassessment of the level of risk of infection by evaluating the effects of immunization resulting from vaccination, proven recovery, as well as the results of reliable testing (molecular and / or antigen).
 
 The following documentation refers to the national solution for the generation, distribution and verification of certificates in compliance with the provisions of the European regulation and the subsequent activation of interoperability with other Member States.
 
@@ -25,13 +24,13 @@ The following documentation refers to the national solution for the generation, 
 For the implementation of the aforementioned proposal for European Regulations, the Ministry of Health, in agreement with the Italian Regions and Autonomous Provinces, with the support of the Ministry for Technological Innovation and Digital Transition and the Ministry of Economy and Finance (MEF), began the creation of a National Platform (PN-DCC) for the issue, distribution and validation of the DCC, which will guarantee the expected European interoperability.
 
 # Principles
-This national platform will constitute a new system, managed by Sogei SPA on behalf of the MEF, of which the Ministry of Health will be the owner, and will be fed by data collected from the National Vaccine Registry (ANV), managed by the Ministry of Health and transferred to the TS System (DL 41/2021 -support Decree- art. 20 paragraph 12), and by data of molecular and antigenic swabs, partly already transmitted to the TS System in relation to previous regulations related to the pandemic t and partly transmitted thanks to new regulatory intervention. The collection of certificates for Covid-19 recovery will be a new feature that can be easily derived from similar features already offered to physicians by the TS System.
+This national platform will constitute a new system, managed by Sogei SPA on behalf of the MEF, of which the Ministry of Health will be the owner, and will be fed by data collected from the National Vaccine Registry (ANV), managed by the Ministry of Health and transferred to the TS System (DL 41/2021 -support Decree- art. 20 paragraph 12), and by data of molecular and antigenic swabs, partly already transmitted to the TS System in relation to previous regulations related to the pandemic and partly transmitted thanks to new regulatory intervention. The collection of certificates for Covid-19 recovery will be a new feature that can be easily derived from similar features already offered to physicians by the TS System.
 Distribution of the DCC to citizens is expected to be through a multi-channel approach. The PN-DCC will generate the DCC that will be inserted in the patient's FSE, and will also be accessible through a new web front-end that will be created. The DCC can also be downloaded through government APPs (APP IO and APP IMMUNI) as well as through the Tessera Sanitaria portal.
-For the verification of the DCC a specific  Verifier App (VerificaC19) will be developed. It will allow the Verifier to read the QR code on the DCC.  In case of a positive outcome, the App shows the details of the DCC and the personal data of the citizen so that the Verifier can verify the identity of the citizen with an identification document and verify the correspondence with the personal data shown by the App.
+For the verification of the DCC a specific  Verifier App (VerificaC19) will be developed. It will allow the Verifier to read the QR code on the DCC.  In case of a positive outcome, the App shows the details of the DCC and the personal data of the citizen so that the Verifier can verify the identity of the citizen with an identification document and check the correspondence with the personal data shown by the App.
 
-Art.9  of the DL 52/2021 (Decree reopening) introduced  the "COVID-19 green certifications" valid at a national level for the mobility in Italian regions at high risk of infection anticipating the introduction of the European DCC The national certificate uses the current paper certifications already produced by the territorial health facilities following vaccination, recovery, molecular or antigenic Covid-19 test.
+Art.9  of the DL 52/2021 (Decree reopening) introduced  the "COVID-19 green certifications" valid at national level for the mobility among Italian regions at high risk of infection anticipating the introduction of the European DCC The national certificate uses the current paper certifications already produced by the territorial health facilities following vaccination, recovery, molecular or antigen Covid-19 test.
 
-The PN-DCC national platform can therefore be activated at a national level, even before the entry into effect of the relevant European regulation, to generate  Covid-19 green certifications in digital format, with QR Code and unique national identifier, interoperable and verifiable through the planned verification App that can ensure the validity, authenticity and assure greater protection of personal data contained in the certification itself.
+The PN-DCC national platform can therefore be activated at national level, even before the entry into force of the relevant European regulation, to generate  Covid-19 green certifications in digital format, with QR Code and unique national identifier, interoperable and verifiable through the planned verification App that can ensure the validity, authenticity and assure greater protection of personal data contained in the certification itself.
 
 # Product
 The key features of the Digital Green Certificate (DCC) are:
@@ -48,5 +47,3 @@ It should also guarantee in all the countries of the Union that no further restr
 
 ## How it works
 Here the [openapi.yaml](./openapi.yaml) file, which describe all services exposed by backend.
-
-# Privacy
