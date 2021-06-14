@@ -42,7 +42,7 @@ The Certificate should also be made available free of charge, also on request, a
 3. The Certificate should contain only the minimum identifying information about the citizen and essential information to verify the validity of the certificate. Certificates will include a limited set of information such as name, date of birth, date of issue, relevant vaccine/test/recovery information, and a unique certificate identifier.
 This data can only be checked to confirm and verify the authenticity and validity of the certificates also in relation to the rules adopted by each Member State regarding e.g. the duration of the immunizing effect of vaccines or infection or the type of vaccine used. 
 4. The Certificate must not be an identification document of the citizen 
-5. Finally the Certificate must not be discriminatory. Is not binding for travel between Member States, which must be guaranteed regardless of the possession of the certificate itself.
+5. Finally the Certificate must not be discriminatory. It's not binding for travel between Member States, which must be guaranteed regardless of the possession of the certificate itself.
 It should also guarantee in all the countries of the Union that no further restrictive measures to travel such as testing or quarantine are implemented.
 
 ## How it works
