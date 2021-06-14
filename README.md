@@ -36,7 +36,7 @@ The PN-DCC national platform can therefore be activated at national level, even 
 The key features of the Digital Green Certificate (DCC) are:
 1. The Certificate must contain the following information: certificate of vaccination, certificate of testing (NAAT / RT-PCR test or rapid antigen test) or certificate of recovery from COVID-19. The goal is to grant the right of free movement both to subjects immunized naturally or through vaccination, but also to non-immune subjects who could not or would not be vaccinated.
 2. The Certificate must be accessible and secure for all EU citizens:
-Certificates must be issued in digital or paper format. Both should have a QR code that contains the necessary key information and a digital signature in order to assure the authenticity of  the certificate.
+Certificates must be issued in digital or paper format. Both should have a QR code that contains the necessary key information and a digital signature in order to assure the authenticity of the certificate.
 The Commission will set up a gateway and support Member States in developing mobile applications that national authorities can use to verify all certificate signatures in the EU.
 The Certificate should also be made available free of charge, also on request, and in the official language(s) of the issuing Member State and in English.
 3. The Certificate should contain only the minimum identifying information about the citizen and information essential to verify the validity of the certificate. Certificates will include a limited set of information such as name, date of birth, date of issue, relevant vaccine/test/recovery information, and a unique certificate identifier.
