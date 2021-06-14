@@ -46,4 +46,4 @@ This data can only be checked to confirm and verify the authenticity and validit
 It should also guarantee in all the countries of the Union that no further restrictive measures to travel such as testing or quarantine are implemented.
 
 ## How it works
-Here the [openapi.yaml](./openapi.yaml) file, which describe all services exposed by backend.
+Here the [openapi.yaml](./openapi.yaml) file, which describes all services exposed by backend.
