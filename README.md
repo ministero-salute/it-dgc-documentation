@@ -30,9 +30,9 @@
 - [Vision and goals](#vision-and-goals)
 - [Principles](#principles)
 - [Product](#product)
-  - [How it works](#product--how-it-works)
-  - [DCC generation process](#product--dcc-generation-process)
-  - [DCC use case](#product--dcc-use-case)
+  - [How it works](#how-it-works)
+  - [DCC generation process](#dcc-generation-process)
+  - [DCC use case](#dcc-use-case)
 
 
 # Introduction
