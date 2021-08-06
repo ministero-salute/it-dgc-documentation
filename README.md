@@ -13,14 +13,6 @@
     <a href="CODE_OF_CONDUCT.md">
       <img src="https://img.shields.io/badge/badge-green.svg" />
     </a>
-    <a href="/">
-      <img alt="java11"
-      src="https://img.shields.io/badge/badge-red.svg">
-    </a>
-    <a href="/">
-      <img alt="security: bandit"
-      src="https://img.shields.io/badge/badge-yellow.svg">
-    </a>
 </div>
 
 
@@ -42,7 +34,7 @@ The following documentation refers to the national solution for the generation, 
 
 
 # Vision and goals
-For the implementation of the aforementioned European Regulations, the Ministry of Health, in agreement with the Italian Regions and Autonomous Provinces, with the support of the Ministry for Technological Innovation and Digital Transition and the Ministry of Economy and Finance (MEF), created the National Platform (PN-DGC) for the issue, the distribution and the validation of the EU DCC. Moreover, the platform will guarantee the expected European interoperability.
+For the implementation of the aforementioned European Regulations, the Ministry of Health, in agreement with the Italian Regions and Autonomous Provinces, with the support of the Ministry for Technological Innovation and Digital Transition and the Ministry of Economy and Finance (MEF), created the National Platform (PN-DGC) for the issue, the distribution and the validation of the EU DCC. Moreover, the platform guarantees the expected European interoperability.
 
 
 # Principles
@@ -52,9 +44,9 @@ the PN-DGC database is fed by data collected from the following databases:
 * the National Vaccine Registry (ANV, Anagrafe Nazionale Vaccini), managed by the Ministry of Health. Data are transferred to the Tessera Sanitaria System (DL 41/2021 -support Decree- art. 20 paragraph 12);
 * data of molecular and antigenic Covid-19 swabs, partly already transmitted to the TS System in relation to previous regulations related to the pandemic and partly transmitted thanks to new regulatory intervention.
 
-The collection of certificates for Covid-19 recovery will be a new feature that can be easily derived from similar features already offered to physicians by the TS System.
+The collection of certificates for Covid-19 recovery is a new feature that can be easily derived from similar features already offered to physicians by the TS System.
 
-Distribution of the DCC to citizens will be carried out through a multi-channel approach. The PN-DGC will generate the DCC that will be inserted in the patient's Fascicolo Sanitario Elettronico (FSE, the online health inbox for official documentation), and will also be accessible through a novel web front-end accessible through the [main website](https://www.dgc.gov.it). Furthermore, the DCC can also be downloaded through the Immuni App as well as through the Tessera Sanitaria portal.
+Distribution of the DCC to citizens is carried out through a multi-channel approach. As such, once the PN-DGC generates the DCC, it will be inserted in the patient's Fascicolo Sanitario Elettronico (FSE, the online health inbox for official documentation), and it will also be accessible through a novel web front-end accessible through the [main website](https://www.dgc.gov.it). Furthermore, the DCC can also be downloaded through the [Immuni App](https://www.immuni.italia.it/) as well as through the [IO App](https://io.italia.it/).
 
 For the verification of the DCC a specific Verifier mobile App (named VerificaC19, [Android](https://github.com/ministero-salute/it-dgc-verificaC19-android), [iOS](https://github.com/ministero-salute/it-dgc-verificaC19-ios)) has been developed. Such an application allows the Verifier to scan the QR code on the DCC, extract the relevant data and verify it subsequently. In case of a positive outcome, the App will show a few details of the DCC, such as the name, surname and the date of birth, of the citizen so that the Verifier can check the correspondence with the citizen’s ID.
 
