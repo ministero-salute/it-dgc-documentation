@@ -26,6 +26,7 @@
   - [DCC generation process](#dcc-generation-process)
   - [DCC use case](#dcc-use-case)
 - [General Information](#general-information)
+  - [Communication flows and security services](#communication-flows-and-security-services)
 
 
 # Introduction
@@ -91,3 +92,8 @@ The image above represents a typical use case of the Digital Green Certificate G
 6. In case the information contained in the DCC is correct, valid and belonging to the traveler, the citizen of Member State A will be able to enter Member State B.
 
 # General Information
+## Communication flows and security services
+This section gives an overview of the communication flows and security services in the DGCG system. It also defines which keys and certificates are used to protect the communication, the uploaded information, the digital green certificates, and a signed trust list that contains all onboarded CSCA certificates. The following figure gives a high-level overview of the DGCG communication flow and security services. The following sub-sections will explain the design in more detail.
+
+![Trust Model](https://raw.githubusercontent.com/eu-digital-green-certificates/dgc-overview/main/guides/images/TrustModel.PNG)
+
