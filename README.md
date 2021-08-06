@@ -25,6 +25,7 @@
   - [How it works](#how-it-works)
   - [DCC generation process](#dcc-generation-process)
   - [DCC use case](#dcc-use-case)
+- [General Information](#general-information)
 
 
 # Introduction
@@ -88,3 +89,5 @@ The image above represents a typical use case of the Digital Green Certificate G
 4. On a daily basis, all installations of the Verifier App of Member State B receive information from the other Member States, such as cryptographic material related to Member State A.
 5. When a citizen of Member State A decides to visit Member State B, he exposes his DCC together with his ID (passport, identity card or other) to the border staff. At this point the Verifier App operated by the border staff of Member State B reads the QR code, extracts the information and proceeds to the validation phase. Since the Verifier App knows the information relating to the signature certificate used by Member State A (downloaded in point 4) it is therefore able to recognize the validity of the DCC and process the information.
 6. In case the information contained in the DCC is correct, valid and belonging to the traveler, the citizen of Member State A will be able to enter Member State B.
+
+# General Information
