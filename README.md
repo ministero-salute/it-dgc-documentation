@@ -10,9 +10,6 @@
     <a href="CODE_OF_CONDUCT.md">
       <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" />
     </a>
-    <a href="CODE_OF_CONDUCT.md">
-      <img src="https://img.shields.io/badge/badge-green.svg" />
-    </a>
 </div>
 
 
