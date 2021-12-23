@@ -173,6 +173,89 @@ Nella descrizione del flusso applicativo faremo riferimento al seguente diagramm
 
 ![](img/image12.png)
 
+Il flusso applicativo parte con l’invocazione dell’API [drl/check](#check) che restituirà lo stato attuale della drl in base alla versione in quel momento presente sul dispositivo che verrà passata come parametro. 
+
+```java
+public class CrlStatus {
+
+    @SerializedName("fromVersion")
+    private Long mFromVersion;
+    @SerializedName("id")
+    private String mId;
+    @SerializedName("chunk")
+    private Long mChunk;
+    @SerializedName("numDiAdd")
+    private Long mNumDiAdd;
+    @SerializedName("numDiDelete")
+    private Long mNumDiDelete;
+    @SerializedName("sizeSingleChunkInByte")
+    private Long mSizeSingleChunkInByte;
+    @SerializedName("totalSizeInByte")
+    private Long mTotalSizeInByte;
+    @SerializedName("version")
+    private Long mVersion;
+    @SerializedName("totalChunk")
+    private Long mTotalChunk;
+    @SerializedName("totalNumberUCVI")
+    private Long mTotalNumberUCVI;
+
+    // ...
+}
+```
+
+A quel punto andremo a controllare se la versione della DRL remota è più recente di quella presente al momento sul dispositivo.
+
+Qualora sia presente una nuova versione della DRL sul backend, potremo procedere allo scaricamento della nuova DRL. Prima di iniziare il download però, dovremo controllare se ci troviamo in una situazione di “pendingDownload”, ossia se l’utente ha iniziato a scaricare una DRL e poi per qualche motivo (perdita di rete, kill della app durante il download ecc.) tale scaricamento non si è completato. Se ci troviamo in questa casistica, e la chiamata alla api `/check` resituisce la presenza di una versione più nuova sul backend (es: ho interrotto a metà lo scaricamento della versione 40, ma la check mi resituisce l’esistenza di una versione 41 più nuova sul backend), la app procederà a cancellare quanto fino ad ora scaricato, a resettare lo status e a riscaricare completamente la DRL, in quanto la app si trova in uno stato non consistente rispetto al backend. In caso contrario, se la check restituisce come ultima versione presente sul backend esattamente quella che ho lasciato in pending download, la app darà la possibilità all’utente di riprendere dal punto di interruzione il download. 
+
+Nel caso in cui invece non sia presente un pending download, la app procederà a scaricare la nuova versione della DRL nel caso sia presente, o terminerà il processo nel caso sia già presente localmente la versione più aggiornata.
+Il download delle revoche è diviso in `chunk`, perciò per verificare la condizione di `“Download Complete”` andremo a controllare che non ci siano più chunk da scaricare; in tal caso, aggiorneremo la nostra `currentVersion` nel dispositivo così da avere una situazione di `“Up to date”` al prossimo check con il server, quando verificheremo se esiste una versione più aggiornata. Prima di effettuare questo update però viene anche controllato che il numero di UCVI in locale coincida con quella presenti sul server restituiti da una ulteriore chiamata alla `/check`, definita come riconciliazione finale; nel caso per un qualunque motivo il numero di UCVI salvati localmente risultasse diverso da quello presente sul backend (es: problemi di scrittura sul db locale), di nuovo la app procederà a cancellare il db locale, resettare le preferenze e riscaricare tutta la DRL partendo dalla versione 0. 
+
+In fase di download dei chunk, verrà gestita la possibiltà di poter ricevere sia una lista di UCVI come snapshot, con cui fare un insert semplice, oppure come un delta rispetto alla versione precedente per gestire aggiunte e rimozioni.
+
+```java
+public class CertificateRevocationList {
+
+    @SerializedName("chunk")
+    private Long mChunk;
+    @SerializedName("creationDate")
+    private String mCreationDate;
+    @SerializedName("delta")
+    private Delta mDelta;
+    @SerializedName("firstElementInChunk")
+    private String mFirstElementInChunk;
+    @SerializedName("id")
+    private String mId;
+    @SerializedName("lastChunk")
+    private Long mLastChunk;
+    @SerializedName("lastElementInChunk")
+    private String mLastElementInChunk;
+    @SerializedName("revokedUcvi")
+    private List<String> mRevokedUcvi;
+    @SerializedName("sizeSingleChunkInByte")
+    private Long mSizeSingleChunkInByte;
+    @SerializedName("version")
+    private Long mVersion;
+    @SerializedName("totalNumberUCVI")
+    private Long mTotalNumberUCVI;
+
+    // ...
+}
+```
+
+```java
+public class Delta {
+
+    @SerializedName("deletions")
+    private List<String> mDeletions;
+    @SerializedName("insertions")
+    private List<String> mInsertions;
+
+    // ...
+}
+```
+
+Perciò per ogni chunk, nei casi in cui la variabile “delta” venisse popolata, localmente andremo ad estrapolare le deletions per rimuovere le UCVI dal DB locale, per poi successivamente andare ad aggiungere le insertions ricevute.
+
 # Documentazione
 
 In questo paragrafo verranno documentate le due API REST esposte per la
