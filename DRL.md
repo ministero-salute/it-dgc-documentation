@@ -91,10 +91,13 @@ Sapendo che:
 DRL sarà composto da 44 caratteri (dato che 256/6 ≈ 42,66 avremo 43
 digit informativi ed un digit "=" di padding).
 
-```js
-const crypto = require('crypto');
+```java
+import java.util.Base64;
+import java.security.MessageDigest;
 
-const transformedUVCI = crypto.createHash('sha256').update("Hello!").digest('base64');
+MessageDigest digester = MessageDigest.getInstance("SHA-256");
+digester.update("Hello!".getBytes());
+Base64.getEncoder().encodeToString(digester.digest());
 ```
 
 ```
