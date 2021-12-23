@@ -199,10 +199,11 @@ per ottimizzare il traffico di rete.
 
 ### Request
 
-  **Method**   GET
-  ------------ -------------------
-  **URL**      /v1/dgc/drl/check
+| Method           | URL |
+| -------------- | ------ |
+| GET | /v1/dgc/drl/check|
 
+Parametri
 
 | Type           | Params | Values | Required |
 | -------------- | ------ | ---- | ----- |
@@ -233,11 +234,9 @@ sul Server). Il valore fornito dal Client dovrà essere non negativo.
 
 ### Response
 
-**Type**          application/json   
------------------ ------------------ -----------------------------------------------------------
-**Status Code**   200                Metadati DRL recuperate con sucesso.
-                  400                I parametri forniti non consentono il recupero di una DRL
-                  500                Errore interno.
+| Type           | Status code |
+| -------------- | ------ |
+| application/json  | 200 Metadati DRL recuperate con sucesso.<br>400 I parametri forniti non consentono il recupero di una DRL<br>500 Errore interno.|
 
 | Field           | Type | Description |
 | -------------- | ------ | ---- |
@@ -272,9 +271,11 @@ partizione recuperare.
 
 ### Request
 
-  **Method**   GET
-  ------------ -------------
-  **URL**      /v1/dgc/drl
+| Method           | URL |
+| -------------- | ------ |
+| GET | /v1/dgc/drl |
+
+Parametri
 
 | Type           | Params | Values | Required |
 | -------------- | ------ | ---- | ----- |
@@ -291,11 +292,9 @@ Vedi API check.
 
 ### Response
 
-  **Type**          application/json   
-  ----------------- ------------------ -----------------------------------------------------------
-  **Status Code**   200                Metadati DRL recuperate con sucesso.
-                    400                I parametri forniti non consentono il recupero di una DRL
-                    500                Errore interno.
+| Type           | Status code |
+| -------------- | ------ |
+| application/json  | 200 Metadati DRL recuperate con sucesso.<br>400 I parametri forniti non consentono il recupero di una DRL<br>500 Errore interno.|
 
 | Field           | Type | Description |
 | -------------- | ------ | ---- |
@@ -314,7 +313,7 @@ Vedi API check.
 | sizeSingleChunkInByte | Long | Vedi API check. |
 | totalSizeInByte | Long | Vedi API check. |
 | revokedUcvi | String[] | Lista degli identificativi contenuti nel chunk identificato dal parametro `chunk`, per la SNAPSHOT con versione identificata dal parametro `version` (questo attributo non sarà valorizzato nel caso in cui si stia eseguendo il download di un chunk di una DIFF). |
-| delta | Long | Oggetto contenete due liste, insertions e deletions, che a loro volta contengono rispettivamente la lista degli identificativi da inserire e da cancellare per allineare la versione della DRL posseduta dal Client a l’ultima disponibile sul Server. Anche in questo caso le operazioni da eseguire saranno organizzate in chunk (questo attributo non sarà valorizzato nel caso in cui si stia eseguendo il download di un chunk di una SNAPSHOT). |
+| delta | Object | Oggetto contenete due liste, insertions e deletions, che a loro volta contengono rispettivamente la lista degli identificativi da inserire e da cancellare per allineare la versione della DRL posseduta dal Client a l’ultima disponibile sul Server. Anche in questo caso le operazioni da eseguire saranno organizzate in chunk (questo attributo non sarà valorizzato nel caso in cui si stia eseguendo il download di un chunk di una SNAPSHOT). |
 
 ## Esempio
 
