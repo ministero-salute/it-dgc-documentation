@@ -327,7 +327,18 @@ Il Server risponderà fornendo le istruzioni per recuperare l'ultima
 SNAPSHOT disponibile, supponiamo la 3, composta da 40 identificativi di
 DGC revocati, organizzati in 4 chunk da 10 elementi:
 
-![](img/image9.png)
+```json
+{
+    "id": "61bcc7c3da0f876422c6a67f",
+    "version": 3,
+    "chunk": 1,
+    "numDiAdd": 40,
+    "totalsizeInByte": 2040,
+    "sizeSingleChunkInByte": 510,
+    "totalChunk": 4,
+    "totalNumberUCVI": 40
+}
+```
 
 Sulla base di queste informazioni il Client si prepara a recuperare i 4
 chunk della SNAPSHOT con versione 3, attraverso request simili alla
@@ -338,7 +349,31 @@ seguente, in cui il numero di chunk varierà tra 1 e 4:
 A queste request il Server risponderà con 4 response simili alla
 seguente fornendo i chunk che compongono la SNAPSHOT versione 3:
 
-![](img/image15.png)
+```json
+{
+    "id": "61bcc7c3da0f876422c6a67f",
+    "version": 3,
+    "chunk": 1,
+    "lastChunk": 4,
+    "revokedUcvi": [
+        "Y31HekM4kgW3RiYs7/q9Uhck22fJfxG2VsIRgX21x9y=",
+        "gOtUzHmEhta7qI6mCiDPkEpfxRIe2cMj29tgZGEocqy=",
+        "cm400voloIOD8xW+ozFPo0g/f08f6SjfywJWsCbFNtg=",
+        "rM162PJL9HruiQFu6nG1FOY/xxVHmuAYygDisJ6sC3g=",
+        "9ak93pLUK/ESJRtk2NETFcES2+MhSqd5KcH6mJIBGTO=",
+        "63KkohTEk+sYOjbOacS9m02IiNGgkjnmQaKpuh/gZMO=",
+        "22IpoBG24VRVped+twMyfrB+3Ixnlu0aOmRP9E+g9nQ=",
+        "K6WE8nmkwhNWnZbOudUdK2XICQmz023cbebwezyIu0Q=",
+        "X28KgOG44t/6YaIUOjKDd45B99pbo9qtHeztXZynyEY=",
+        "zjLEXusFYgo9DutFWsEaGuCL9RL8poPk2MkOyOM2nOs="
+    ],
+    "creationDate":"2021-12-17717:24:19.120+00:00",
+    "firstElementInChunk":"Y31HekM4kgW3RiYs7/q9Uhck22fJfxG2VsIRgX21x9y=",
+    "lastElementInChunk":"zjLEXusFYgo9DutFWsEaGuCL9RL8poPk2MkOyOM2nOs=",
+    "sizeSingleChunkInByte": 510,
+    "totalNumberUCVI": 40
+}
+```
 
 A download terminato il Client dovebbe nuovamente eseguire una chiamata
 ispettiva per verificare il numero totale di identificativi presenti
@@ -359,7 +394,19 @@ Il server risponderà a questa richiesta fornendo le informazioni
 necessarie ad aggiornare la DRL versione 1, per renderla equivalente
 alla DRL versione 3:
 
-![](img/image8.png)
+```json
+{
+    "id": "61bcc7c3da0£876422c6a6a8",
+    "fromVersion": 1,
+    "version": 3,
+    "chunk": 1,
+    "numDiAdd": 40,
+    "totalsizeInByte": 2040,
+    "sizeSingleChunkInByte": 510,
+    "totalChunk": 4,
+    "totalNumberUCVI": 40
+}
+```
 
 Con questa response il Server comunica al Client che la versione 3 è
 composta da 40 identificativi, e per passare dalla versione 1 alla
@@ -382,7 +429,29 @@ Il Server risponderà a queste request con delle response contenenti le
 informazioni necessarie ad aggiornare la DRL versione 1 per renderla
 equivalente alla versione 3:
 
-![](img/image3.png)
+```json
+{
+    "id": "61bcc7c3da0f876422c6a6a8",
+    "fromVersion": 1,
+    "version": 3,
+    "chunk": 1,
+    "lastChunk": 2,
+    "delta": {
+        "insertions": [
+            "/56vInsThTXNJ9x2GrAXaDaVc7HA0j08FayveKey7KA=",
+            "/sQVKUBUxDmT21FRm6vnPOA5rheTEYOBRIaP22gEXJO=",
+            "63tnu42yVyNCpTjAIq2NsabINN5B19721c10RdYmDjk=",
+            "AOXGyNOJID212fTePArNVFnqW4k23YGjkny405FqwEk=",
+            "Et/XFDeE+v2z/hIL7dec0071e14XeT1YPPdwefavOvA=",
+            "PVezXeW/CuesjOSE9gA4DGmtceOMJHp/VUb7V78tP7c=",
+            "RCTq02Ynu4jGkPEVkjgWrgvINxflivul+sUPSwqMpuo="
+        ],
+        "deletions": []
+    },
+    "sizeSingleChunkInByte": 510,
+    "totalNumberUCVI": 40
+}
+```
 
 Nuovamente a download terminato il Client dovebbe eseguire una chiamata
 ispettiva per verificare il numero totale di identificativi presenti
