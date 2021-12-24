@@ -1,6 +1,6 @@
 # DGC Revocation List
 
-**Indice**
+## Indice
 
 - [Scopo del documento](#scopo-del-documento)
   - [Acronimi](#acronimi)
