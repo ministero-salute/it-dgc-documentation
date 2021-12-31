@@ -124,12 +124,12 @@ Non vi è differenziazione di logica, sebbene contestualmente all'introduzione d
 
 Per quanto riguarda la validazione in funzione della modalità impostata per tipologia di verifica, i DGC PV vengono gestiti alla stregua dei DGC base di guarigione con durata 180gg.
 
-Vengono semplicemente riconosciuti / distinti da quelli base, onde validarli correttamente in virtù della diversa scadenza, tramite il controllo delle entry `extendedKeyUsage` :
+Vengono semplicemente riconosciuti / distinti da quelli base, onde validarli correttamente in virtù della diversa scadenza, tramite il controllo delle entry `extendedKeyUsage` e della corrispondenza del campo CO = IT (_la diversa scadenza dei DGC R PV vale solo quelli emessi in Italia_) :
 
 | OID                         | DGC R                                                     | 
 |-----------------------------|-----------------------------------------------------------|
 | 1.3.6.1.4.1.1847.2021.1.3   | Guarigione 180gg                                          | 
-| 1.3.6.1.4.1.0.1847.2021.1.3 | Guarigione PV 270gg (da 01/01/2022 verrà ridotta a 180gg) |
+| 1.3.6.1.4.1.0.1847.2021.1.3 | Guarigione PV CO=IT 270gg (da 01/02/2022 ridotta a 180gg) |
 
 ## Flussi Vaccinazione
 
@@ -164,12 +164,12 @@ Unitamente alla seconda condizione (dn) è possibile definire una tabella di rif
 | dn/sd | Medicinal Product    | Vaccinazione   | Status      |
 |-------|----------------------|----------------|-------------|
 | 1/1   | JOHNSON              | Ciclo Completo | TEST_NEEDED |
-| 1/2   | tutti                | Parziale       | NOT_VALID   |
-| 2/1   | tutti                | Booster        | VALID       |
+| 1/2   | any                  | Parziale       | NOT_VALID   |
+| 2/1   | any                  | Booster        | VALID       |
 | 2/2   | JOHNSON              | Booster        | VALID       | 
-| 2/2   | tutti tranne JOHNSON | Ciclo Completo | TEST_NEEDED |
-| 3/2   | tutti                | Booster        | VALID       |
-| 3/3   | tutti                | Booster        | VALID       |
+| 2/2   | any tranne JOHNSON   | Ciclo Completo | TEST_NEEDED |
+| 3/2   | any                  | Booster        | VALID       |
+| 3/3   | any                  | Booster        | VALID       |
 
 In base a questa tabella è possibile ricavare le condizioni di controllo, onde distinguere in modo preciso le tipologie DGC V nella tipologia di verifica Booster.
 
