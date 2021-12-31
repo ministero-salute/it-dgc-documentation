@@ -24,6 +24,7 @@
   - [DCC use case](#dcc-use-case)
 - [General Information](#general-information)
   - [Communication flows and security services](#communication-flows-and-security-services)
+- [VerificaC19 Resources](#verificac19-resources)
 
 
 # Introduction
@@ -94,3 +95,16 @@ This section gives an overview of the communication flows and security services 
 
 ![Trust Model](https://raw.githubusercontent.com/eu-digital-green-certificates/dgc-overview/main/guides/images/TrustModel.PNG)
 
+-------------------------------------
+
+# VerificaC19 Resources
+(IT)
+- [Documentazione Digital Green Certificate Revocation List (DRL)](DRL.md)
+
+- [SDK Android/Kotlin ufficiale](https://github.com/ministero-salute/it-dgc-verificac19-sdk-android/blob/develop/README.md)
+
+- [Documentazione dettagliata SDK Android/Kotlin](https://ministero-salute.github.io/it-dgc-verificac19-sdk-android/documentation/)
+
+- [SDK/Librerie terze - autorizzate da Ministero della Salute](https://github.com/ministero-salute/it-dgc-verificac19-sdk-onboarding#lista-librerie)
+
+- [ScanMode - Tipologie di Verifica DGC](SCANMODE.md)
