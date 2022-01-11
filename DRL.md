@@ -407,7 +407,7 @@ A scopo esemplificativo supponiamo che un Client privo di una propria
 DRL esegua una chiamata ispettiva (non fornendo alcun parametro di input
 dato che non possiede alcun dato da comunicare al Server):
 
-[https://get.dgc.gov.it/v1/dgc/drl](https://get.dgc.gov.it/v1/dgc/drl)
+[https://get.dgc.gov.it/v1/dgc/drl/check](https://get.dgc.gov.it/v1/dgc/drl/check)
 
 Il Server risponderà fornendo le istruzioni per recuperare l'ultima
 SNAPSHOT disponibile, supponiamo la 3, composta da 40 identificativi di
@@ -509,7 +509,7 @@ dalla DRL versione 1).
 A questo punto il Client si prepara ad eseguire delle richieste simile
 alla seguente con un chunk che varia tra 1 e 2:
 
-[https://get.dgc.gov.it/v1/dgc/drl/check?version=1&chunk=1](https://get.dgc.gov.it/v1/dgc/drl/check?version=1&chunk=1)
+[https://get.dgc.gov.it/v1/dgc/drl?version=1&chunk=1](https://get.dgc.gov.it/v1/dgc/drl?version=1&chunk=1)
 
 Il Server risponderà a queste request con delle response contenenti le
 informazioni necessarie ad aggiornare la DRL versione 1 per renderla
