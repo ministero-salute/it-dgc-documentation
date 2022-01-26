@@ -8,6 +8,7 @@
   - [Panoramica](#panoramica)
 - [Scenari di Validazione](#scenari-di-validazione)
   - [Flusso Applicativo](#flusso-applicativo)
+  - [Flussi Esenzione](#flussi-esenzione)
   - [Flussi Tampone](#flussi-tampone)
   - [Flussi Guarigione](#flussi-guarigione)
   - [Flussi Vaccinazione](#flussi-vaccinazione)
@@ -68,6 +69,14 @@ Ne deriva la seguente tabella di riferimento per gli esiti di validazione in amb
 | TEST_NEEDED | Certificazione valida richiesto tampone                                       | GIALLO   |
 | VALID       | Certificazione valida                                                         | VERDE    |
 
+> _**Nota :**_ 
+>
+> _Ancora ammessa la possibilità di restituire - pure in ambito produzione/release - l'esito `NOT_VALID_YET` **'Certificazione ancora non valida'**, qualora il KO validazione sia dovuto a controllo effettuato in data anteriore alla data d'inizio validità del certificato - definita nelle [Validation Rules](https://get.dgc.gov.it/v1/dgc/settings)._
+>
+> _Trattandosi comunque di un sottocaso di `NOT_VALID`, nei paragrafi successivi non verrà esplicitato._
+
+
+
 ---------------
 
 # Scenari di Validazione
@@ -76,9 +85,27 @@ Ne deriva la seguente tabella di riferimento per gli esiti di validazione in amb
 
 I vari scenari con i rispettivi flussi di validazione DGC sono rappresentati nel seguente diagramma di flusso.
 
-![](img/image20.png)
+![](img/image20A.png)
 
-Nei paragravi successivi vengono analizzati in dettaglio i flussi specifici & in funzione della tipologia DGC sottoposta a validazione.
+Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in funzione della tipologia DGC sottoposta a validazione.
+
+## Flussi Esenzione
+
+Questa è la tabella degli esiti possibili per i nuovi certificati CRT E (esenzione) - fuori schema DGC.
+
+| Tipologia | BASE              | RAFFORZATA        | BOOSTER                 |
+|-----------|-------------------|-------------------|-------------------------|
+| E (any)   | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID |
+
+Solo l'impostazione della tipologia di verifica Booster può comportare override di esito rispetto alla tipologia di verifica Base.
+
+```
+if  (EsitoVerificaBase(CRT-E) == VALID) {
+        if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
+            else return CertificateStatus.VALID
+    }
+    else return CertificateStatus.NOT_VALID
+```
 
 ## Flussi Tampone
 
@@ -223,7 +250,7 @@ Inoltre, gli Stati membri devono anche predisporre le procedure per revoca dei D
 
 Per quanto concerne l'Italia, il Ministero della Salute sta procedendo con le riemissioni dei DGC non conformi alle nuove regole, come risulta anche da segnalazioni pubbliche di utenti, che hanno già potuto scaricare i loro nuovi DGC tramite l'app Io.
 
-Infatti, è già stata inserita tra le [FAQ DGC](https://www.dgc.gov.it/web/faq.html) la nota di completamento emissioni dei nuovi DGC V Richiamo dn/sn 2/1 per tutti coloro, che avevano ricevuto il richiamo dopo vaccino Janseen (J&J) tra l'11 novembre e il 22 dicembre 2021. 
+Infatti, è già stata inserita tra le [FAQ DGC](https://www.dgc.gov.it/web/faq.html) la nota di completamento emissioni dei nuovi DGC V Richiamo dn/sd 2/1 per tutti coloro, che avevano ricevuto il richiamo dopo vaccino Janseen (J&J) tra l'11 novembre e il 22 dicembre 2021. 
 
 ------------------------
 
@@ -236,6 +263,8 @@ Infatti, è già stata inserita tra le [FAQ DGC](https://www.dgc.gov.it/web/faq.
 - [Documentazione dettagliata SDK Android/Kotlin](https://ministero-salute.github.io/it-dgc-verificac19-sdk-android/documentation/)
 
 - [Documentazione Digital Green Certificate Revocation List (DRL)](DRL.md)
+
+- [Documentazione Certificati Digitali di Esenzione Vaccinale](EXEMPTIONS.md)
 
 
 
