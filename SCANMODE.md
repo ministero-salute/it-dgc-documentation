@@ -87,7 +87,7 @@ Ne deriva la seguente tabella di riferimento per gli esiti di validazione in amb
 
 I vari scenari con i rispettivi flussi di validazione DGC sono rappresentati nel seguente diagramma di flusso.
 
-![](img/image20B.png)
+![](img/image20C.png)
 
 Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in funzione della tipologia DGC sottoposta a validazione.
 
@@ -95,16 +95,19 @@ Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in
 
 Questa è la tabella degli esiti possibili per i nuovi certificati CRT E (esenzione) - fuori schema DGC.
 
-| Tipologia | BASE              | RAFFORZATA        | BOOSTER                 | LAVORO            | SCUOLA            | 
-|-----------|-------------------|-------------------|-------------------------|-------------------|-------------------|
-| E (any)   | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID |
+| Tipologia | BASE              | RAFFORZATA        | BOOSTER                 | LAVORO            | SCUOLA    | 
+|-----------|-------------------|-------------------|-------------------------|-------------------|-----------|
+| E (any)   | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | NOT_VALID |
 
-Solo l'impostazione della tipologia di verifica Booster può comportare override di esito rispetto alla tipologia di verifica Base.
+Solo l'impostazione della tipologia di verifica Booster o Scuola comportano override di esito rispetto alla tipologia di verifica Base.
 
 ```
 if  (EsitoVerificaBase(CRT-E) == VALID) {
-        if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
-            else return CertificateStatus.VALID
+        if (TipologiaVerifica == "SCUOLA") return CertificateStatus.NOT_VALID
+            else {
+                  if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
+                      else return CertificateStatus.VALID
+            }
     }
     else return CertificateStatus.NOT_VALID
 ```
