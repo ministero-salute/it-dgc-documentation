@@ -250,8 +250,8 @@ if  (EsitoVerificaBase(DGC-V) == VALID) {
                     }
                     return CertificateStatus.VALID
                 } else return CertificateStatus.VALID
-		}
-		return CertificateStatus.VALID 
+        }
+        return CertificateStatus.VALID 
     }
     else return CertificateStatus.NOT_VALID
 ```
