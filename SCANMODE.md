@@ -149,7 +149,7 @@ if  (EsitoVerificaBase(DGC-R) == VALID) {
         if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
             else {
                   if ((TipologiaVerifica == "SCUOLA") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
-			          else {
+                      else {
                             if (
                                 ((TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "LAVORO"))
                                 AND
@@ -244,9 +244,9 @@ if  (EsitoVerificaBase(DGC-V) == VALID) {
         else if ((TipologiaVerifica == "LAVORO") OR (TipologiaVerifica == "RAFFORZATA")) {
                 if ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180)) {
                     if ((MedicinalProduct == JOHNSON) {
-						if ((dn == sd) AND (dn < 2) return CertificateStatus.TEST_NEEDED
+                        if ((dn == sd) AND (dn < 2) return CertificateStatus.TEST_NEEDED
                     } else {
-						if ((dn == sd) AND (dn < 3) return CertificateStatus.TEST_NEEDED // check altri mp
+                        if ((dn == sd) AND (dn < 3) return CertificateStatus.TEST_NEEDED // check altri mp
                     }
                     return CertificateStatus.VALID
                 } else return CertificateStatus.VALID
