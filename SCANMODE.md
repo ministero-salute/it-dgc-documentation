@@ -46,6 +46,8 @@ Si riporta un breve elenco di alcuni acronimi e termini specifici utilizzati nel
 | BOOSTER              | Verifica BOOSTER (Richiamo / Ciclo Completo + Tampone / Guarigione + Tampone / Esenzione + Tampone)   |
 | WORK                 | Verifica LAVORO (Vaccinazione / Guarigione / Tampone under 50 / Esenzione)                            |
 | SCHOOL               | Verifica SCUOLA (Richiamo / Ciclo Completo da meno di 120gg / Guarigione da meno di 120gg / Esenzione |
+| IT                   | Certificato emesso da Italia                                                                          |
+| NOT_IT               | Certificato emesso da Stato estero                                                                    |
 
 ##  Panoramica
 
@@ -57,7 +59,7 @@ Il processo di verifica GreenPass è sintetizzabile nella seguente sequenza di c
 
 3. Assenza dell'UVCI nella [blacklist in Validation Rules](https://get.dgc.gov.it/v1/dgc/settings) e nella lista revoche in [DRL](DRL.md).
 
-4. Validità in funzione dei criteri combinati di Validation Rules (tipologie DGC, durate) + Impostazione tipologia di verifica  
+4. Validità in funzione dei criteri combinati di Validation Rules (tipologie DGC, durate) + Impostazione tipologia di verifica
 
 
 Nel rispetto delle disposizioni normative e delle indicazioni fornite dagli Organi competenti, alla tipologia BASE (3G) di verifica dei DGC per Vaccinazione / Guarigione / Tampone sono state aggiunte le tipologie RAFFORZATA (2G) - BOOSTER - LAVORO - SCUOLA [[2]](#2), che prevedono criteri addizionali per OK validazione.
@@ -87,7 +89,7 @@ Ne deriva la seguente tabella di riferimento per gli esiti di validazione in amb
 
 I vari scenari con i rispettivi flussi di validazione DGC sono rappresentati nel seguente diagramma di flusso.
 
-![](img/image20C.png)
+![](img/image20D.png)
 
 Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in funzione della tipologia DGC sottoposta a validazione.
 
@@ -95,19 +97,16 @@ Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in
 
 Questa è la tabella degli esiti possibili per i nuovi certificati CRT E (esenzione) - fuori schema DGC.
 
-| Tipologia | BASE              | RAFFORZATA        | BOOSTER                 | LAVORO            | SCUOLA    | 
-|-----------|-------------------|-------------------|-------------------------|-------------------|-----------|
-| E (any)   | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | NOT_VALID |
+| Tipologia | BASE              | RAFFORZATA        | BOOSTER                 | LAVORO            | SCUOLA            | 
+|-----------|-------------------|-------------------|-------------------------|-------------------|-------------------|
+| E (any)   | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID |
 
-Solo l'impostazione della tipologia di verifica Booster o Scuola comportano override di esito rispetto alla tipologia di verifica Base.
+Solo l'impostazione della tipologia di verifica Booster comporta override di esito rispetto alla tipologia di verifica Base.
 
 ```
 if  (EsitoVerificaBase(CRT-E) == VALID) {
-        if (TipologiaVerifica == "SCUOLA") return CertificateStatus.NOT_VALID
-            else {
-                  if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
-                      else return CertificateStatus.VALID
-            }
+        if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
+            else return CertificateStatus.VALID
     }
     else return CertificateStatus.NOT_VALID
 ```
@@ -136,19 +135,28 @@ if ((TipologiaVerifica == "BOOSTER") OR (TipologiaVerifica == "RAFFORZATA") OR (
 Questa è la tabella degli esiti possibili per DGC R (guarigione).
 
 
-| Tipologia | Condizione            | BASE              | RAFFORZATA        | BOOSTER                 | LAVORO            | SCUOLA            | 
-|-----------|-----------------------|-------------------|-------------------|-------------------------|-------------------|-------------------|
-| R / R-PV  | DGC Attivo da  <120gg | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID |
-| R / R-PV  | DGC Attivo da >=120gg | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | NOT_VALID         |
+| Tipologia | Condizione                            | BASE              | RAFFORZATA              | BOOSTER                 | LAVORO                  | SCUOLA            | 
+|-----------|---------------------------------------|-------------------|-------------------------|-------------------------|-------------------------|-------------------|
+| R / R-PV  | DGC Attivo da <120gg                  | VALID o NOT_VALID | VALID o NOT_VALID       | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | VALID o NOT_VALID |
+| R / R-PV  | DGC IT Attivo da >=120gg              | VALID o NOT_VALID | VALID o NOT_VALID       | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | NOT_VALID         |
+| R / R-PV  | DGC NOT_IT Attivo da >=120gg & <180gg | VALID o NOT_VALID | VALID o NOT_VALID       | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | NOT_VALID         |
+| R / R-PV  | DGC NOT_IT Attivo da >=180gg          | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | TEST_NEEDED o NOT_VALID | TEST_NEEDED o NOT_VALID | NOT_VALID         |
 
-Solo l'impostazione delle tipologie di verifica Booster e Scuola può comportare override di esito rispetto alla tipologia di verifica Base.
+Questo è quindi il relativo flusso con gli override di esito rispetto alla tipologia di verifica Base, in funzione di scanmode / durata / Stato di emissione.
 
 ```
 if  (EsitoVerificaBase(DGC-R) == VALID) {
         if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
             else {
-                  if ((TipologiaVerifica == "SCUOLA") AND (validità >= 120)) return CertificateStatus.NOT_VALID
-			          else return CertificateStatus.VALID
+                  if ((TipologiaVerifica == "SCUOLA") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
+			          else {
+					        if (
+					            ((TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "LAVORO"))
+					            AND
+							    ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180))
+                                ) return CertificateStatus.TEST_NEEDED
+								     else return CertificateStatus.VALID
+                      }
             }
     }
     else return CertificateStatus.NOT_VALID
@@ -175,12 +183,14 @@ Vengono semplicemente riconosciuti / distinti da quelli base, onde validarli cor
 
 Questa è la tabella degli esiti possibili per DGC V (vaccinazione).
 
-| Tipologia        | Condizione            | BASE              | RAFFORZATA         | BOOSTER                 | LAVORO            | SCUOLA            |
-|------------------|-----------------------|-------------------|--------------------|-------------------------|-------------------|-------------------| 
-| V Parziale       | any                   | VALID o NOT_VALID | VALID o NOT_VALID  | NOT_VALID               | VALID o NOT_VALID | NOT_VALID         |
-| V Ciclo Completo | DGC Attivo da  <120gg | VALID o NOT_VALID | VALID o NOT_VALID  | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID |
-| V Ciclo Completo | DGC Attivo da >=120gg | VALID o NOT_VALID | VALID o NOT_VALID  | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | NOT_VALID         |
-| V Richiamo       | any                   | VALID o NOT_VALID | VALID o NOT_VALID  | VALID o NOT_VALID       | VALID o NOT_VALID | VALID o NOT_VALID |
+| Tipologia        | Condizione                            | BASE              | RAFFORZATA               | BOOSTER                 | LAVORO                  | SCUOLA            |
+|------------------|---------------------------------------|-------------------|--------------------------|-------------------------|-------------------------|-------------------|
+| V Parziale       | any                                   | VALID o NOT_VALID | VALID o NOT_VALID        | NOT_VALID               | VALID o NOT_VALID       | NOT_VALID         |
+| V Ciclo Completo | DGC Attivo da  <120gg                 | VALID o NOT_VALID | VALID o NOT_VALID        | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | VALID o NOT_VALID |
+| V Ciclo Completo | DGC IT Attivo da >=120gg              | VALID o NOT_VALID | VALID o NOT_VALID        | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | NOT_VALID         |
+| V Ciclo Completo | DGC NOT_IT Attivo da >=120gg & <180gg | VALID o NOT_VALID | VALID o NOT_VALID        | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | NOT_VALID         |
+| V Ciclo Completo | DGC NOT_IT Attivo da >=180gg          | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID  | TEST_NEEDED o NOT_VALID | TEST_NEEDED o NOT_VALID | NOT_VALID         |
+| V Richiamo       | any                                   | VALID o NOT_VALID | VALID o NOT_VALID        | VALID o NOT_VALID       | VALID o NOT_VALID       | VALID o NOT_VALID |
 
 Rispetto ai flussi dei casi Tampone e Guarigione è evidente una maggior complessità di gestione per tipologia DGC V parziale / ciclo completo / richiamo.
 
@@ -200,19 +210,21 @@ La condizione dn=sd NON è ancora sufficiente, onde distinguere correttamente DG
 
 La prima (mp) consente infatti di distinguere tra le vaccinazioni con ciclo base 2 dosi e quelle con ciclo monodose. In tal senso la condizione è agevole da implementare, essendovi un solo Medicinal Product monodose definito nelle Validation Rules = EU/1/20/1525 Jannsen - in Italia più noto con il nome Johnson&Johnson.
 
-Unitamente alla seconda condizione (dn) è possibile definire una tabella di riferimento per gli override esiti in Tipologia di verifica Booster e Scuola di DGC V, che ottengano esito Valid in condizioni di verifica Base.
+Unitamente alla seconda condizione (dn) è possibile definire una tabella di riferimento per gli override esiti di DGC V, che ottengano esito Valid in condizioni di verifica Base.
 
-| dn/sd | Medicinal Product    | Vaccinazione   | BOOSTER Status | SCUOLA Status                        |
-|-------|----------------------|----------------|----------------|--------------------------------------|
-| 1/1   | JOHNSON              | Ciclo Completo | TEST_NEEDED    | VALID (<120gg) o NOT_VALID (>=120gg) |
-| 1/2   | any                  | Parziale       | NOT_VALID      | NOT_VALID                            |
-| 2/1   | any                  | Booster        | VALID          | VALID                                |
-| 2/2   | JOHNSON              | Booster        | VALID          | VALID                                |
-| 2/2   | any tranne JOHNSON   | Ciclo Completo | TEST_NEEDED    | VALID (<120gg) o NOT_VALID (>=120gg) |
-| 3/2   | any                  | Booster        | VALID          | VALID                                |
-| 3/3   | any                  | Booster        | VALID          | VALID                                |
+| dn/sd | Medicinal Product    | Vaccinazione   | BOOSTER        | SCUOLA                | RAFFORZATA / LAVORO           | 
+|-------|----------------------|----------------|----------------|-----------------------|-------------------------------|
+| 1/1   | JOHNSON              | Ciclo Completo | TEST_NEEDED    | VALID (<120gg)        | VALID                         |
+|       |                      |                |                | o NOT_VALID (>=120gg) |                               |
+| 1/2   | any                  | Parziale       | NOT_VALID      | NOT_VALID             | VALID                         |
+| 2/1   | any                  | Booster        | VALID          | VALID                 | VALID                         |
+| 2/2   | JOHNSON              | Booster        | VALID          | VALID                 | VALID                         |
+| 2/2   | any tranne JOHNSON   | Ciclo Completo | TEST_NEEDED    | VALID (<120gg)        | VALID (IT / NOT_IT<180gg)     |
+|       |                      |                |                | o NOT_VALID (>=120gg) | o TEST_NEEDED (NOT_IT>=180gg) |
+| 3/2   | any                  | Booster        | VALID          | VALID                 | VALID                         |
+| 3/3   | any                  | Booster        | VALID          | VALID                 | VALID                         |
 
-In base a questa tabella è possibile ricavare le condizioni di controllo, onde distinguere in modo preciso le tipologie DGC V nella tipologia di verifica Booster.
+In base a questa tabella è possibile ricavare le condizioni di controllo, onde distinguere in modo preciso le tipologie DGC V nelle tipologie di verifica.
 
 ```
 if  (EsitoVerificaBase(DGC-V) == VALID) {
@@ -229,7 +241,17 @@ if  (EsitoVerificaBase(DGC-V) == VALID) {
             }
             else return CertificateStatus.NOT_VALID // dn<sd comporta NOT_VALID in Verifica Booster e Scuola
         }
-        else return CertificateStatus.VALID 
+        else if ((TipologiaVerifica == "LAVORO") OR (TipologiaVerifica == "RAFFORZATA")) {
+                if ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180)) {
+                    if ((MedicinalProduct == JOHNSON) {
+						if ((dn == sd) AND (dn < 2) return CertificateStatus.TEST_NEEDED
+                    } else {
+						if ((dn == sd) AND (dn < 3) return CertificateStatus.TEST_NEEDED // check altri mp
+                    }
+                    return CertificateStatus.VALID
+                } else return CertificateStatus.VALID
+		}
+		return CertificateStatus.VALID 
     }
     else return CertificateStatus.NOT_VALID
 ```
