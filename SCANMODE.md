@@ -150,12 +150,12 @@ if  (EsitoVerificaBase(DGC-R) == VALID) {
             else {
                   if ((TipologiaVerifica == "SCUOLA") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
 			          else {
-					        if (
-					            ((TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "LAVORO"))
-					            AND
-							    ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180))
+                            if (
+                                ((TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "LAVORO"))
+                                AND
+                                ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180))
                                 ) return CertificateStatus.TEST_NEEDED
-								     else return CertificateStatus.VALID
+                                     else return CertificateStatus.VALID
                       }
             }
     }
