@@ -29,25 +29,25 @@ Nelle sezioni successive sono pertanto riportati i tracciati dei flussi di valid
 
 Si riporta un breve elenco di alcuni acronimi e termini specifici utilizzati nel documento.
 
-| Termine              | Descrizione                                                                                           |
-| -------------------- | ----------------------------------------------------------------------------------------------------- |
-| SDK                  | Software Development Kit                                                                              |
-| DGC                  | Digital Green Certificate (in Italia conosciuto col nome di GreenPass)                                |
-| DRL                  | DGC Revocation List                                                                                   |
-| Blacklist            | Lista di blocco                                                                                       |
-| Validation Rules     | Regole nazionali di validazione dei GreenPass (tipologie certificati, durate, ..)                     |
-| UVCI                 | Unique Vaccination Certificate Identifier                                                             |
-| dn                   | Dose Number (Numero della dose somministrata)                                                         |
-| sd                   | Total Series of Doses (Totale dosi del ciclo / ciclo + richiami)                                      |
-| mp                   | Medicinal Product (Codice prodotto vaccino)                                                           |
-| co                   | Country of Vaccination/Test/Recovery (Nazione di vaccinazione/tampone/guarigione)                     |
-| 3G                   | Verifica BASE (Vaccinazione / Guarigione / Tampone / Esenzione)                                       |
-| 2G                   | Verifica RAFFORZATA (Vaccinazione / Guarigione / Esenzione)                                           |
-| BOOSTER              | Verifica BOOSTER (Richiamo / Ciclo Completo + Tampone / Guarigione + Tampone / Esenzione + Tampone)   |
-| WORK                 | Verifica LAVORO (Vaccinazione / Guarigione / Tampone under 50 / Esenzione)                            |
-| SCHOOL               | Verifica SCUOLA (Richiamo / Ciclo Completo da meno di 120gg / Guarigione da meno di 120gg / Esenzione |
-| IT                   | Certificato emesso da Italia                                                                          |
-| NOT_IT               | Certificato emesso da Stato estero                                                                    |
+| Termine              | Descrizione                                                                                                |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| SDK                  | Software Development Kit                                                                                   |
+| DGC                  | Digital Green Certificate (in Italia conosciuto col nome di GreenPass)                                     |
+| DRL                  | DGC Revocation List                                                                                        |
+| Blacklist            | Lista di blocco                                                                                            |
+| Validation Rules     | Regole nazionali di validazione dei GreenPass (tipologie certificati, durate, ..)                          |
+| UVCI                 | Unique Vaccination Certificate Identifier                                                                  |
+| dn                   | Dose Number (Numero della dose somministrata)                                                              |
+| sd                   | Total Series of Doses (Totale dosi del ciclo / ciclo + richiami)                                           |
+| mp                   | Medicinal Product (Codice prodotto vaccino)                                                                |
+| co                   | Country of Vaccination/Test/Recovery (Nazione di vaccinazione/tampone/guarigione)                          |
+| 3G                   | Verifica BASE (Vaccinazione / Guarigione / Tampone / Esenzione)                                            |
+| 2G                   | Verifica RAFFORZATA (Vaccinazione / Guarigione / Esenzione)                                                |
+| BOOSTER              | Verifica VISITATORI RSA (Richiamo / Ciclo Completo + Tampone / Guarigione + Tampone / Esenzione + Tampone) |
+| WORK                 | Verifica LAVORO (Vaccinazione / Guarigione / Tampone under 50 / Esenzione)                                 |
+| SCHOOL               | Verifica STUDENTI (Richiamo / Ciclo Completo da meno di 120gg / Guarigione da meno di 120gg / Esenzione)   |
+| IT                   | Certificato emesso da Italia                                                                               |
+| NOT_IT               | Certificato emesso da Stato estero                                                                         |
 
 ##  Panoramica
 
@@ -62,7 +62,7 @@ Il processo di verifica GreenPass è sintetizzabile nella seguente sequenza di c
 4. Validità in funzione dei criteri combinati di Validation Rules (tipologie DGC, durate) + Impostazione tipologia di verifica
 
 
-Nel rispetto delle disposizioni normative e delle indicazioni fornite dagli Organi competenti, alla tipologia BASE (3G) di verifica dei DGC per Vaccinazione / Guarigione / Tampone sono state aggiunte le tipologie RAFFORZATA (2G) - BOOSTER - LAVORO - SCUOLA [[2]](#2), che prevedono criteri addizionali per OK validazione.
+Nel rispetto delle disposizioni normative e delle indicazioni fornite dagli Organi competenti, alla tipologia BASE (3G) di verifica dei DGC per Vaccinazione / Guarigione / Tampone sono state aggiunte le tipologie RAFFORZATA (2G) - VISITATORI RSA - LAVORO - STUDENTI [[2]](#2), che prevedono criteri addizionali per OK validazione.
 
 Ne deriva la seguente tabella di riferimento per gli esiti di validazione in ambito di applicazione.
 
@@ -97,15 +97,15 @@ Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in
 
 Questa è la tabella degli esiti possibili per i nuovi certificati CRT E (esenzione) - fuori schema DGC.
 
-| Tipologia | BASE              | RAFFORZATA        | BOOSTER                 | LAVORO            | SCUOLA            | 
+| Tipologia | BASE              | RAFFORZATA        | VISITATORI RSA          | LAVORO            | STUDENTI          | 
 |-----------|-------------------|-------------------|-------------------------|-------------------|-------------------|
 | E (any)   | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID |
 
-Solo l'impostazione della tipologia di verifica Booster comporta override di esito rispetto alla tipologia di verifica Base.
+Solo l'impostazione della tipologia di verifica VISITATORI RSA comporta override di esito rispetto alla tipologia di verifica Base.
 
 ```
 if  (EsitoVerificaBase(CRT-E) == VALID) {
-        if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
+        if (TipologiaVerifica == "VISITATORI RSA") return CertificateStatus.TEST_NEEDED
             else return CertificateStatus.VALID
     }
     else return CertificateStatus.NOT_VALID
@@ -115,15 +115,15 @@ if  (EsitoVerificaBase(CRT-E) == VALID) {
 
 Questa è la tabella degli esiti possibili per DGC T (tampone).
 
-| Tipologia | Condizione    | BASE              | RAFFORZATA | BOOSTER     | LAVORO            | SCUOLA    | 
-|-----------|---------------|-------------------|------------|-------------|-------------------|-----------|
-| T (any)   | Età < 50 anni | VALID o NOT_VALID | NOT_VALID  | NOT_VALID   | VALID o NOT_VALID | NOT_VALID |
-| T (any)   | Età >=50 anni | VALID o NOT_VALID | NOT_VALID  | NOT_VALID   | NOT_VALID         | NOT_VALID |
+| Tipologia | Condizione    | BASE              | RAFFORZATA | VISITATORI RSA | LAVORO            | STUDENTI  | 
+|-----------|---------------|-------------------|------------|----------------|-------------------|-----------|
+| T (any)   | Età < 50 anni | VALID o NOT_VALID | NOT_VALID  | NOT_VALID      | VALID o NOT_VALID | NOT_VALID |
+| T (any)   | Età >=50 anni | VALID o NOT_VALID | NOT_VALID  | NOT_VALID      | NOT_VALID         | NOT_VALID |
 
-La sola impostazione della tipologia di verifica Rafforzata (2G) o Booster o Scuola comporta infatti automaticamente l'esito di certificazione non valida. 
+La sola impostazione della tipologia di verifica RAFFORZATA (2G) o VISITATORI RSA o STUDENTI comporta infatti automaticamente l'esito di certificazione non valida. 
 
 ```
-if ((TipologiaVerifica == "BOOSTER") OR (TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "SCUOLA")) return CertificateStatus.NOT_VALID
+if ((TipologiaVerifica == "VISITATORI RSA") OR (TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "STUDENTI")) return CertificateStatus.NOT_VALID
     else {
           if ((TipologiaVerifica == "LAVORO") AND (età >= 50)) return CertificateStatus.NOT_VALID
              else return CertificateStatus.EsitoVerificaBase(DGC-T)
@@ -135,20 +135,20 @@ if ((TipologiaVerifica == "BOOSTER") OR (TipologiaVerifica == "RAFFORZATA") OR (
 Questa è la tabella degli esiti possibili per DGC R (guarigione).
 
 
-| Tipologia | Condizione                            | BASE              | RAFFORZATA              | BOOSTER                 | LAVORO                  | SCUOLA            | 
+| Tipologia | Condizione                            | BASE              | RAFFORZATA              | VISITATORI RSA          | LAVORO                  | STUDENTI          | 
 |-----------|---------------------------------------|-------------------|-------------------------|-------------------------|-------------------------|-------------------|
 | R / R-PV  | DGC Attivo da <120gg                  | VALID o NOT_VALID | VALID o NOT_VALID       | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | VALID o NOT_VALID |
 | R / R-PV  | DGC IT Attivo da >=120gg              | VALID o NOT_VALID | VALID o NOT_VALID       | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | NOT_VALID         |
 | R / R-PV  | DGC NOT_IT Attivo da >=120gg & <180gg | VALID o NOT_VALID | VALID o NOT_VALID       | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | NOT_VALID         |
 | R / R-PV  | DGC NOT_IT Attivo da >=180gg          | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | TEST_NEEDED o NOT_VALID | TEST_NEEDED o NOT_VALID | NOT_VALID         |
 
-Questo è quindi il relativo flusso con gli override di esito rispetto alla tipologia di verifica Base, in funzione di scanmode / durata / Stato di emissione.
+Questo è quindi il relativo flusso con gli override di esito rispetto alla tipologia di verifica BASE, in funzione di scanmode / durata / Stato di emissione.
 
 ```
 if  (EsitoVerificaBase(DGC-R) == VALID) {
-        if (TipologiaVerifica == "BOOSTER") return CertificateStatus.TEST_NEEDED
+        if (TipologiaVerifica == "VISITATORI RSA") return CertificateStatus.TEST_NEEDED
             else {
-                  if ((TipologiaVerifica == "SCUOLA") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
+                  if ((TipologiaVerifica == "STUDENTI") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
                       else {
                             if (
                                 ((TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "LAVORO"))
@@ -183,7 +183,7 @@ Vengono semplicemente riconosciuti / distinti da quelli base, onde validarli cor
 
 Questa è la tabella degli esiti possibili per DGC V (vaccinazione).
 
-| Tipologia        | Condizione                            | BASE              | RAFFORZATA               | BOOSTER                 | LAVORO                  | SCUOLA            |
+| Tipologia        | Condizione                            | BASE              | RAFFORZATA               | VISITATORI RSA          | LAVORO                  | STUDENTI          |
 |------------------|---------------------------------------|-------------------|--------------------------|-------------------------|-------------------------|-------------------|
 | V Parziale       | any                                   | VALID o NOT_VALID | VALID o NOT_VALID        | NOT_VALID               | VALID o NOT_VALID       | NOT_VALID         |
 | V Ciclo Completo | DGC Attivo da  <120gg                 | VALID o NOT_VALID | VALID o NOT_VALID        | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID       | VALID o NOT_VALID |
@@ -212,7 +212,7 @@ La prima (mp) consente infatti di distinguere tra le vaccinazioni con ciclo base
 
 Unitamente alla seconda condizione (dn) è possibile definire una tabella di riferimento per gli override esiti di DGC V, che ottengano esito Valid in condizioni di verifica Base.
 
-| dn/sd | Medicinal Product    | Vaccinazione   | BOOSTER        | SCUOLA                | RAFFORZATA / LAVORO           | 
+| dn/sd | Medicinal Product    | Vaccinazione   | VISITATORI RSA | STUDENTI              | RAFFORZATA / LAVORO           | 
 |-------|----------------------|----------------|----------------|-----------------------|-------------------------------|
 | 1/1   | JOHNSON              | Ciclo Completo | TEST_NEEDED    | VALID (<120gg)        | VALID                         |
 |       |                      |                |                | o NOT_VALID (>=120gg) |                               |
@@ -228,18 +228,18 @@ In base a questa tabella è possibile ricavare le condizioni di controllo, onde 
 
 ```
 if  (EsitoVerificaBase(DGC-V) == VALID) {
-        if ((TipologiaVerifica == "BOOSTER") OR (TipologiaVerifica == "SCUOLA")) {
+        if ((TipologiaVerifica == "VISITATORI RSA") OR (TipologiaVerifica == "STUDENTI")) {
             if (dn >= sd) {
                 if (MedicinalProduct == JOHNSON) {
-                    if ((dn == sd) AND (dn < 2) AND (TipologiaVerifica == "BOOSTER")) return CertificateStatus.TEST_NEEDED
-                    if ((dn == sd) AND (dn < 2) AND (TipologiaVerifica == "SCUOLA") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
+                    if ((dn == sd) AND (dn < 2) AND (TipologiaVerifica == "VISITATORI RSA")) return CertificateStatus.TEST_NEEDED
+                    if ((dn == sd) AND (dn < 2) AND (TipologiaVerifica == "STUDENTI") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
                 } else {
-                    if ((dn == sd) AND (dn < 3) AND (TipologiaVerifica == "BOOSTER")) return CertificateStatus.TEST_NEEDED // check altri mp
-                    if ((dn == sd) AND (dn < 3) AND (TipologiaVerifica == "SCUOLA") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
+                    if ((dn == sd) AND (dn < 3) AND (TipologiaVerifica == "VISITATORI RSA")) return CertificateStatus.TEST_NEEDED // check altri mp
+                    if ((dn == sd) AND (dn < 3) AND (TipologiaVerifica == "STUDENTI") AND (Attivo >= 120)) return CertificateStatus.NOT_VALID
                 }
                 return CertificateStatus.VALID
             }
-            else return CertificateStatus.NOT_VALID // dn<sd comporta NOT_VALID in Verifica Booster e Scuola
+            else return CertificateStatus.NOT_VALID // dn<sd comporta NOT_VALID in Verifica VISITATORI RSA e STUDENTI
         }
         else if ((TipologiaVerifica == "LAVORO") OR (TipologiaVerifica == "RAFFORZATA")) {
                 if ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180)) {
@@ -316,9 +316,9 @@ Infatti, è già stata inserita tra le [FAQ DGC](https://www.dgc.gov.it/web/faq.
 
 #### [2]
 - Disposizioni normative di aggiunta Tipologia Verifica Rafforzata - [Art.5 DL 172/2021 26/11/2021](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84133&articolo=5)
-- Disposizioni Normative di aggiunta Tipologia Verifica Booster - [Art.7 DL 221/2021 24/12/2021](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84682&articolo=7)
+- Disposizioni Normative di aggiunta Tipologia Verifica Visitatori RSA - [Art.7 DL 221/2021 24/12/2021](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84682&articolo=7)
 - Disposizioni Normative di aggiunta Tipologia Verifica Lavoro - [Art.1 DL 1/2022 07/01/2022](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84933&articolo=1)
-- Disposizioni Normative di aggiunta Tipologia Verifica Scuola - [Art.4 DL 1/2022 07/01/2002](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84933&articolo=4)
+- Disposizioni Normative di aggiunta Tipologia Verifica Studenti - [Art.4 DL 1/2022 07/01/2002](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84933&articolo=4)
 
 #### [3]
 - FAQ verifier-app CovPass Germania - [Why is the certificate for my booster vaccination invalid or not immediately valid?](https://www.digitaler-impfnachweis-app.de/en/faq)
