@@ -166,14 +166,14 @@ Non vi è differenziazione di logica, sebbene contestualmente all'introduzione d
 >
 > Questa nuova Certificazione verde COVID-19 per guarigione post vaccinazione, valida per 9 mesi dalla data del certificato di guarigione, verrà emessa a partire dal 28 dicembre 2021.
 
-Per quanto riguarda la validazione in funzione della modalità impostata per tipologia di verifica, i DGC R PV vengono gestiti alla stregua dei DGC base di guarigione con durata 180gg.
+Per quanto riguarda la validazione in funzione della modalità impostata per tipologia di verifica, i DGC R PV vengono gestiti alla stregua dei DGC base di guarigione `co = IT` con durata 180gg.
 
-Vengono semplicemente riconosciuti / distinti da quelli base, onde validarli correttamente in virtù della diversa scadenza, tramite il controllo delle entry `extendedKeyUsage` e della corrispondenza del campo CO = IT (_la diversa scadenza dei DGC R PV vale solo quelli emessi in Italia_) :
+Vengono semplicemente riconosciuti / distinti da quelli base, onde validarli correttamente in virtù della diversa scadenza, tramite il controllo delle entry `extendedKeyUsage` e della corrispondenza del campo `co = IT` (_la diversa scadenza dei DGC R PV vale solo per quelli emessi in Italia_) :
 
-| OID                         | DGC R                                                     | 
-|-----------------------------|-----------------------------------------------------------|
-| 1.3.6.1.4.1.1847.2021.1.3   | Guarigione 180gg                                          | 
-| 1.3.6.1.4.1.0.1847.2021.1.3 | Guarigione PV CO=IT 270gg (da 01/02/2022 ridotta a 180gg) |
+| OID                         | DGC R                                          | 
+|-----------------------------|------------------------------------------------|
+| 1.3.6.1.4.1.1847.2021.1.3   | Guarigione PV `co = IT` (540gg dal 07/02/2022) | 
+| 1.3.6.1.4.1.0.1847.2021.1.3 | Guarigione PV `co = IT` (540gg dal 07/02/2022) |
 
 ## Flussi Vaccinazione
 
