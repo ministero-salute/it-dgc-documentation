@@ -47,7 +47,7 @@ Si riporta un breve elenco di alcuni acronimi e termini specifici utilizzati nel
 | 3G                   | Verifica BASE (Vaccinazione / Guarigione / Tampone / Esenzione)                                                                 |
 | 2G                   | Verifica RAFFORZATA (Vaccinazione / Guarigione / Esenzione)                                                                     |
 | BOOSTER              | Verifica VISITATORI RSA (Richiamo / Ciclo Completo + Tampone / Guarigione + Tampone / Esenzione + Tampone)                      |
-| SCHOOL               | Verifica STUDENTI (Richiamo / Ciclo Completo da meno di 120gg / Guarigione da meno di 120gg / Esenzione)                        |
+| SCHOOL **(!)**       | Verifica STUDENTI (Richiamo / Ciclo Completo da meno di 120gg / Guarigione da meno di 120gg / Esenzione) **(!)**                |
 | WORK                 | Verifica LAVORO (Vaccinazione / Guarigione / Tampone under 50 / Esenzione)                                                      |
 | ENTRY_ITALY          | Verifica INGRESSO IT (Richiamo / Ciclo completo da meno di 270gg (+ Tampone per NOT_EMA o più di 180gg) / Guarigione / Tampone) |
 |                      |                                                                                                                                 |
@@ -55,6 +55,12 @@ Si riporta un breve elenco di alcuni acronimi e termini specifici utilizzati nel
 | NOT_IT               | Certificato emesso da Stato estero                                                                                              |
 | EMA                  | Medicinal Product in elenco autorizzati EMA (_incluso Sputnik solo SM - San Marino_)                                            |
 | NOT_EMA              | Medicinal Product NON in elenco EMA                                                                                             |
+
+> **(!)** _L'utilizzo della Tipologia di verifica STUDENTI (scanmode SCHOOL) è consentito solo alle app ufficiali VerificaC19 per iOS e Android._
+>
+> _Pertanto tale modalità non deve essere implementata all'interno degli SDK terzi (autorizzati dal Ministero della Salute in conformità al DPCM 12/10/2021)._
+
+-------------------
 
 ##  Panoramica
 
