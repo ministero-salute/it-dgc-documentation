@@ -108,3 +108,5 @@ This section gives an overview of the communication flows and security services 
 - [SDK/Librerie terze - autorizzate da Ministero della Salute](https://github.com/ministero-salute/it-dgc-verificac19-sdk-onboarding#lista-librerie)
 
 - [ScanMode - Tipologie di Verifica DGC](SCANMODE.md)
+
+- [Exemptions - Certificati Digitali di Esenzione Vaccinale](EXEMPTIONS.md)
