@@ -48,7 +48,7 @@ Si riporta un breve elenco di alcuni acronimi e termini specifici utilizzati nel
 | 2G                   | Verifica RAFFORZATA (Vaccinazione / Guarigione / Esenzione)                                                                     |
 | BOOSTER              | Verifica VISITATORI RSA (Richiamo / Ciclo Completo + Tampone / Guarigione + Tampone / Esenzione + Tampone)                      |
 | SCHOOL **(!)**       | Verifica STUDENTI (Richiamo / Ciclo Completo da meno di 120gg / Guarigione da meno di 120gg / Esenzione) **(!)**                |
-| WORK                 | Verifica LAVORO (Vaccinazione / Guarigione / Tampone under 50 / Esenzione)                                                      |
+| WORK **(!)**         | Verifica LAVORO (Vaccinazione / Guarigione / Tampone under 50 / Esenzione)                                                      |
 | ENTRY_ITALY          | Verifica INGRESSO IT (Richiamo / Ciclo completo da meno di 270gg (+ Tampone per NOT_EMA o più di 180gg) / Guarigione / Tampone) |
 |                      |                                                                                                                                 |
 | IT                   | Certificato emesso da Italia                                                                                                    |
@@ -56,9 +56,11 @@ Si riporta un breve elenco di alcuni acronimi e termini specifici utilizzati nel
 | EMA                  | Medicinal Product in elenco autorizzati EMA (_incluso Sputnik solo SM - San Marino_)                                            |
 | NOT_EMA              | Medicinal Product NON in elenco EMA                                                                                             |
 
-> **(!)** _L'utilizzo della Tipologia di verifica STUDENTI (scanmode SCHOOL) è consentito solo alle app ufficiali VerificaC19 per iOS e Android._
+> **(!)** _Da Febbraio 2022 l'utilizzo della Tipologia di verifica STUDENTI (scanmode SCHOOL) era consentito solo alle app ufficiali VerificaC19 per iOS e Android. Da Aprile 2022 tale tipologia di verifica è stata rimossa anche dalle app ufficiali._
 >
-> _Pertanto tale modalità non deve essere implementata all'interno degli SDK terzi (autorizzati dal Ministero della Salute in conformità al DPCM 12/10/2021)._
+> _Da Aprile 2022 è stato rimosso anche il supporto per la tipologia di verifica LAVORO (scanmode WORK)._
+>
+> _Pertanto tali modalità non devono essere più implementate all'interno degli SDK terzi (autorizzati dal Ministero della Salute in conformità al DPCM 12/10/2021)._
 
 -------------------
 
@@ -75,7 +77,9 @@ Il processo di verifica GreenPass è sintetizzabile nella seguente sequenza di c
 4. Validità in funzione dei criteri combinati di Validation Rules (tipologie DGC, durate) + Impostazione tipologia di verifica
 
 
-Nel rispetto delle disposizioni normative e delle indicazioni fornite dagli Organi competenti, alla tipologia BASE (3G) di verifica dei DGC per Vaccinazione / Guarigione / Tampone sono state aggiunte le tipologie RAFFORZATA (2G) - VISITATORI RSA - STUDENTI - LAVORO - INGRESSO IT [[2]](#2), che prevedono criteri addizionali per OK validazione.
+Nel rispetto delle disposizioni normative e delle indicazioni fornite dagli Organi competenti, alla tipologia BASE (3G) di verifica dei DGC per Vaccinazione / Guarigione / Tampone sono state gradualmente aggiunte le tipologie RAFFORZATA (2G) - VISITATORI RSA - STUDENTI - LAVORO - INGRESSO IT [[2]](#2), che prevedono criteri addizionali per OK validazione.
+
+Successivamente, in virtù delle disposizioni per il superamento delle misure di contrasto alla diffusione dell'epidemia da COVID-19 [[2b]](#2b), sono state rimosse le tipologie STUDENTI e LAVORO. 
 
 Ne deriva la seguente tabella di riferimento per gli esiti di validazione in ambito di applicazione.
 
@@ -106,7 +110,7 @@ Ne deriva la seguente tabella di riferimento per gli esiti di validazione in amb
 
 I vari scenari in ambito produzione/release con i rispettivi flussi di validazione DGC sono rappresentati nel seguente diagramma di flusso.
 
-![](img/image20E.png)
+![](img/image20F.png)
 
 Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in funzione della tipologia DGC sottoposta a validazione.
 
@@ -116,9 +120,9 @@ Nei paragrafi successivi vengono analizzati in dettaglio i flussi specifici & in
 
 Questa è la tabella degli esiti possibili per i nuovi certificati CRT E (esenzione) - fuori schema DGC.
 
-| Tipologia | BASE              | RAFFORZATA        | VISITATORI RSA          | STUDENTI          | LAVORO            | INGRESSO IT |
-|-----------|-------------------|-------------------|-------------------------|-------------------|-------------------|-------------|
-| E         | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID | NOT_VALID   |
+| Tipologia | BASE              | RAFFORZATA        | VISITATORI RSA          | INGRESSO IT |
+|-----------|-------------------|-------------------|-------------------------|-------------|
+| E         | VALID o NOT_VALID | VALID o NOT_VALID | TEST_NEEDED o NOT_VALID | NOT_VALID   |
 
 Solo l'impostazione delle tipologie di verifica VISITATORI RSA - INGRESSO IT comporta override di esito rispetto alla tipologia di verifica Base.
 
@@ -136,19 +140,15 @@ if  ((EsitoVerificaBase(CRT-E) == VALID) && (TipologiaVerifica != "INGRESSO IT")
 
 Questa è la tabella degli esiti possibili per DGC T (tampone).
 
-| Tipologia   | Condizione    | BASE              | RAFFORZATA | VISITATORI RSA | STUDENTI  | LAVORO            | INGRESSO IT       |
-|-------------|---------------|-------------------|------------|----------------|-----------|-------------------|-------------------|
-| T (PCR/RAT) | Età < 50 anni | VALID o NOT_VALID | NOT_VALID  | NOT_VALID      | NOT_VALID | VALID o NOT_VALID | VALID o NOT_VALID |
-| T (PCR/RAT) | Età >=50 anni | VALID o NOT_VALID | NOT_VALID  | NOT_VALID      | NOT_VALID | NOT_VALID         | VALID o NOT_VALID |
+| Tipologia   | BASE              | RAFFORZATA | VISITATORI RSA | INGRESSO IT       |
+|-------------|-------------------|------------|----------------|-------------------|
+| T (PCR/RAT) | VALID o NOT_VALID | NOT_VALID  | NOT_VALID      | VALID o NOT_VALID |
 
-L'impostazione delle tipologie di verifica RAFFORZATA (2G) - VISITATORI RSA - STUDENTI comporta automaticamente l'esito di certificazione non valida per le validazioni dei DGC Tampone.
+L'impostazione delle tipologie di verifica RAFFORZATA (2G) - VISITATORI RSA comporta automaticamente l'esito di certificazione non valida per le validazioni dei DGC Tampone.
 
 ```
-if ((TipologiaVerifica == "VISITATORI RSA") OR (TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "STUDENTI")) return CertificateStatus.NOT_VALID
-    else {
-          if ((TipologiaVerifica == "LAVORO") AND (età >= 50)) return CertificateStatus.NOT_VALID
-             else return CertificateStatus.EsitoVerificaBase(DGC-T)
-    }
+if ((TipologiaVerifica == "VISITATORI RSA") OR (TipologiaVerifica == "RAFFORZATA")) return CertificateStatus.NOT_VALID
+    else return CertificateStatus.EsitoVerificaBase(DGC-T)
 ```
 
 ----------------
@@ -158,15 +158,13 @@ if ((TipologiaVerifica == "VISITATORI RSA") OR (TipologiaVerifica == "RAFFORZATA
 Questa è la tabella degli esiti possibili per DGC R (guarigione) e R-PV (guarigione post vaccino).
 
 
-| Tipologia | Condizione                 | BASE             | RAFFORZATA             | VISITATORI RSA         | STUDENTI         | LAVORO                 | INGRESSO IT       |
-|-----------|----------------------------|------------------|------------------------|------------------------|------------------|------------------------|-------------------|
-| R         | DGC <120gg                 | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID |
-| R         | DGC IT >=120gg             | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| EXPIRED          | VALID o NOT_VALID      | VALID o NOT_VALID |
-| R         | DGC NOT_IT >=120gg & <180gg| VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| EXPIRED          | VALID o NOT_VALID      | VALID o NOT_VALID |
-| R         | DGC NOT_IT >=180gg **(!)** | VALID o NOT_VALID| TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| EXPIRED          | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID |
-|           |                            |                  |                        |                        |                  |                        |                   |
-| R-PV      | DGC IT <120gg              | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID |
-| R-PV      | DGC IT >=120gg             | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | EXPIRED          | VALID o NOT_VALID      | VALID o NOT_VALID |
+| Tipologia | Condizione                 | BASE             | RAFFORZATA             | VISITATORI RSA         | INGRESSO IT       |
+|-----------|----------------------------|------------------|------------------------|------------------------|-------------------|
+| R         | DGC IT                     | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID |
+| R         | DGC NOT_IT <180gg          | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID |
+| R         | DGC NOT_IT >=180gg **(!)** | VALID o NOT_VALID| TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| VALID o NOT_VALID |
+|           |                            |                  |                        |                        |                   |
+| R-PV      | DGC IT                     | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | VALID o NOT_VALID |
 
 > **(!)** _Caso previsto nelle recenti disposizioni normative [[2]](#2), ma non riscontrabile in ambito produzione con le attuali [medicinal rules](https://get.dgc.gov.it/v1/dgc/settings). Queste prevedono infatti la medesima durata di 180gg sia per i certificati DCG R base di guarigione emessi in Italia che per quelli emessi da Stati esteri._
 
@@ -179,16 +177,14 @@ if  (EsitoVerificaBase(DGC-R) == VALID) {
                      else return CertificateStatus.TEST_NEEDED
                   }
                   else {
-                  if ((TipologiaVerifica == "STUDENTI") AND (Attivo >= 120)) return CertificateStatus.EXPIRED
-                      else {
                             if (
-                                ((TipologiaVerifica == "RAFFORZATA") OR (TipologiaVerifica == "LAVORO"))
+                                ((TipologiaVerifica == "RAFFORZATA"))
                                 AND
                                 ((NazioneCertificato == "NOT_IT") AND (Attivo >= 180))
                                 ) return CertificateStatus.TEST_NEEDED
                                      else return CertificateStatus.VALID
-                      }
-            }
+
+                  }
     }
     else return CertificateStatus.NOT_VALID
 ```
@@ -216,21 +212,16 @@ Vengono riconosciuti / distinti da quelli base, onde validarli correttamente in 
 
 Questa è la tabella degli esiti possibili per DGC V (vaccinazione).
 
-| Tipologia | Condizione                      | BASE             | RAFFORZATA             | VISITATORI RSA         | STUDENTI         | LAVORO                 | INGRESSO IT      |
-|-----------|---------------------------------|------------------|------------------------|------------------------|------------------|------------------------|------------------|
-| V Parziale| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | NOT_VALID              | NOT_VALID        | VALID o NOT_VALID      | VALID o NOT_VALID|
-| V Parziale| NOT_EMA                         | NOT_VALID        | NOT_VALID              | NOT_VALID              | NOT_VALID        | NOT_VALID              | NOT_VALID        |
-|           |                                 |                  |                        |                        |                  |                        |                  |
-| V Ciclo   | EMA && <120gg                   | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID|
-| V Ciclo   | NOT_EMA && <120gg               | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        | TEST_NEEDED o NOT_VALID| NOT_VALID        |
-| V Ciclo   | DGC IT >=120gg                  | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| EXPIRED          | VALID o NOT_VALID      | VALID o NOT_VALID|
-| V Ciclo   | NOT_IT && EMA >=120gg & <180gg  | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| EXPIRED          | VALID o NOT_VALID      | VALID o NOT_VALID|
-| V Ciclo   | NOT_EMA >=120gg & <180gg        | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        | TEST_NEEDED o NOT_VALID| NOT_VALID        |
-| V Ciclo   | NOT_IT && EMA >=180gg           | VALID o NOT_VALID| TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| EXPIRED          | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID|
-| V Ciclo   | NOT_EMA >=180gg                 | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        | TEST_NEEDED o NOT_VALID| NOT_VALID        |
-|           |                                 |                  |                        |                        |                  |                        |                  |
-| V Richiamo| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID|
-| V Richiamo| NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        | TEST_NEEDED o NOT_VALID| NOT_VALID        |
+| Tipologia | Condizione                      | BASE             | RAFFORZATA             | VISITATORI RSA         | INGRESSO IT      |
+|-----------|---------------------------------|------------------|------------------------|------------------------|------------------|
+| V Parziale| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | NOT_VALID              | VALID o NOT_VALID|
+| V Parziale| NOT_EMA                         | NOT_VALID        | NOT_VALID              | NOT_VALID              | NOT_VALID        |
+|           |                                 |                  |                        |                        |                  |
+| V Ciclo   | EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID|
+| V Ciclo   | NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        |
+|           |                                 |                  |                        |                        |                  |
+| V Richiamo| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | VALID o NOT_VALID|
+| V Richiamo| NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        |
 
 Rispetto ai flussi dei casi Tampone e Guarigione è evidente una maggior complessità di gestione per tipologia DGC V parziale / ciclo completo / richiamo.
 
@@ -252,23 +243,22 @@ La prima (mp) consente infatti di distinguere tra le vaccinazioni con ciclo base
 
 Unitamente alla seconda condizione (dn) è possibile definire una tabella di riferimento per gli override esiti di DGC V nelle modalità distinte da Base e Ingresso IT. 
 
-| dn/sd | Medicinal Product    | Vaccinazione   | VISITATORI RSA         | STUDENTI               | RAFFORZATA / LAVORO **(!)**            |
-|-------|----------------------|----------------|------------------------|------------------------|----------------------------------------|
-| 1/1   | JOHNSON              | Ciclo Completo | TEST_NEEDED            | VALID (<120gg)         | VALID                                  |
-|       |                      |                |                        | o EXPIRED (>=120gg)    |                                        |
-| 1/2   | any                  | Parziale       | NOT_VALID              | NOT_VALID              | VALID                                  |
-|       |                      |                |                        |                        | o NOT_VALID (NOT_EMA)                  |
-| 2/1   | any                  | Booster        | VALID                  | VALID                  | VALID                                  |
-| 2/2   | JOHNSON              | Booster        | VALID                  | VALID                  | VALID                                  |
-| 2/2   | any tranne JOHNSON   | Ciclo Completo | TEST_NEEDED            | VALID (EMA <120gg)     | VALID (IT / NOT_IT<180gg)              |
-|       |                      |                |                        | o EXPIRED (EMA >=120gg)| o TEST_NEEDED (NOT_EMA / NOT_IT>=180gg)|
-|       |                      |                |                        | o NOT VALID (NOT_EMA)  |                                        |
-| 3/2   | any                  | Booster        | VALID                  | VALID                  | VALID                                  |
-|       |                      |                | o TEST_NEEDED (NOT_EMA)| o NOT VALID (NOT_EMA)  | o TEST_NEEDED (NOT_EMA)                |
-| 3/3   | any                  | Booster        | VALID                  | VALID                  | VALID                                  |
-|       |                      |                | o TEST_NEEDED (NOT_EMA)| o NOT VALID (NOT_EMA)  | o TEST_NEEDED (NOT_EMA)                |
+| dn/sd | Medicinal Product    | Vaccinazione   | VISITATORI RSA         | RAFFORZATA                             |
+|-------|----------------------|----------------|------------------------|----------------------------------------|
+| 1/1   | JOHNSON              | Ciclo Completo | TEST_NEEDED            | VALID                                  |
+|       |                      |                |                        |                                        |
+| 1/2   | any                  | Parziale       | NOT_VALID              | VALID                                  |
+|       |                      |                |                        | o NOT_VALID (NOT_EMA)                  |
+| 2/1   | any                  | Booster        | VALID                  | VALID                                  |
+| 2/2   | JOHNSON              | Booster        | VALID                  | VALID                                  |
+| 2/2   | any tranne JOHNSON   | Ciclo Completo | TEST_NEEDED            | VALID (IT / NOT_IT<180gg)              |
+|       |                      |                |                        | o TEST_NEEDED (NOT_EMA / NOT_IT>=180gg)|
+|       |                      |                |                        |                                        |
+| 3/2   | any                  | Booster        | VALID                  | VALID                                  |
+|       |                      |                | o TEST_NEEDED (NOT_EMA)| o TEST_NEEDED (NOT_EMA)                |
+| 3/3   | any                  | Booster        | VALID                  | VALID                                  |
+|       |                      |                | o TEST_NEEDED (NOT_EMA)| o TEST_NEEDED (NOT_EMA)                |
 
-> **(!)** _Impostando la modalità LAVORO non come 2G, bensì come `3G se età intestatario < 50 anni` + `2G se età >= 50 anni`, vi è override NOT_VALID per tutti i DGC V con Medicinal Product NOT_EMA con età < 50 anni._
 
 In base a questa tabella è possibile ricavare le condizioni di controllo, onde distinguere in modo preciso le tipologie DGC V nelle tipologie di verifica.
 
@@ -288,16 +278,13 @@ if (CertificatoNonAttivo == VERO) return CertificateStatus.NOT_VALID_YET
 
 if (VaccinoEMA == FALSO) {
     if ((TipologiaVerifica == "BASE") 
-        OR (TipologiaVerifica == "STUDENTI") 
         OR (TipologiaVerifica == "INGRESSO IT")
-        OR ((TipologiaVerifica == "LAVORO") AND (Age < 50))
         OR ((TipologiaVerifica == "VISITATORI RSA") AND (TipologiaVaccino = "PARZIALE"))
     ) return CertificateStatus.NOT_VALID
 
     if ((TipologiaVerifica == "VISITATORI RSA") AND (TipologiaVaccino != "PARZIALE")) return CertificateStatus.TEST_NEEDED
 
-    if (((TipologiaVerifica == "LAVORO") AND (Age >= 50))
-        OR ((TipologiaVerifica == "RAFFORZATA") AND (TipologiaVaccino != "PARZIALE"))
+    if (((TipologiaVerifica == "RAFFORZATA") AND (TipologiaVaccino != "PARZIALE"))
         OR ((TipologiaVerifica == "VISITATORI RSA") AND (TipologiaVaccino != "PARZIALE"))
     ) return CertificateStatus.TEST_NEEDED
 	
@@ -308,22 +295,6 @@ if (EsitoVerificaBase(DGC-R) == VALID) {
     if ((TipologiaVerifica == "VISITATORI RSA") AND (TipologiaVaccino != "PARZIALE")) {
         if (TipologiaVaccino == "RICHIAMO") return CertificateStatus.VALID
         else return CertificateStatus.TEST_NEEDED
-    }
-
-    if ((TipologiaVerifica == "STUDENTI") AND (TipologiaVaccino != "PARZIALE")) {
-        if (TipologiaVaccino == "RICHIAMO") return CertificateStatus.VALID
-        else {
-              if (EmissioneDGC < 120) return CertificateStatus.VALID
-              else return CertificateStatus.EXPIRED
-        }
-    }
-
-    if (((TipologiaVerifica == "LAVORO") AND (Age >= 50)) OR (TipologiaVerifica == "RAFFORZATA")) {
-        if (TipologiaVaccino != "CICLO") return CertificateStatus.VALID
-        else {
-              if ((EmissioneDGC >= 180) AND (NazioneCertificato == "NOT_IT")) return CertificateStatus.TEST_NEEDED
-              else return CertificateStatus.VALID
-        }
     }
 
     if ((TipologiaVerifica == "INGRESSO IT") AND (TipologiaVaccino != "PARZIALE")) return CertificateStatus.VALID
@@ -398,6 +369,9 @@ Infatti, è già stata inserita tra le [FAQ DGC](https://www.dgc.gov.it/web/faq.
 - Disposizioni Normative di aggiunta Tipologia Verifica Studenti - [Art.4 DL 1/2022 07/01/2002](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84933&articolo=4)
 - Disposizioni Normative di aggiunta Tipologia Verifica Lavoro - [Art.1 DL 1/2022 07/01/2022](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=84933&articolo=1)
 - Disposizioni Normative di aggiunta Tipologia Verifica Ingresso IT - [Art.3 DL 5/2022 04/02/2022](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=85657&articolo=3)
+
+#### [2b]
+- Disposizioni normative per il superamento delle misure di contrasto alla diffusione dell'epidemia da COVID-19 - [DL 24/2022 24/03/2022](https://www.trovanorme.salute.gov.it/norme/dettaglioAtto?id=86394)
 
 #### [3]
 - FAQ verifier-app CovPass Germania - [Why is the certificate for my booster vaccination invalid or not immediately valid?](https://www.digitaler-impfnachweis-app.de/en/faq)
