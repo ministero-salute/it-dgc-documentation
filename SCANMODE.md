@@ -212,16 +212,20 @@ Vengono riconosciuti / distinti da quelli base, onde validarli correttamente in 
 
 Questa è la tabella degli esiti possibili per DGC V (vaccinazione).
 
-| Tipologia | Condizione                      | BASE             | RAFFORZATA             | VISITATORI RSA         | INGRESSO IT      |
-|-----------|---------------------------------|------------------|------------------------|------------------------|------------------|
-| V Parziale| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | NOT_VALID              | VALID o NOT_VALID|
-| V Parziale| NOT_EMA                         | NOT_VALID        | NOT_VALID              | NOT_VALID              | NOT_VALID        |
-|           |                                 |                  |                        |                        |                  |
-| V Ciclo   | EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID|
-| V Ciclo   | NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        |
-|           |                                 |                  |                        |                        |                  |
-| V Richiamo| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | VALID o NOT_VALID|
-| V Richiamo| NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID        |
+| Tipologia | Condizione                      | BASE             | RAFFORZATA             | VISITATORI RSA         | INGRESSO IT               |
+|-----------|---------------------------------|------------------|------------------------|------------------------|---------------------------|
+| V Parziale| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | NOT_VALID              | VALID o NOT_VALID         |
+| V Parziale| NOT_EMA                         | NOT_VALID        | NOT_VALID              | NOT_VALID              | NOT_VALID                 |
+|           |                                 |                  |                        |                        |                           |
+| V Ciclo   | EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | TEST_NEEDED o NOT_VALID| VALID o NOT_VALID **(!)** |
+| V Ciclo   | NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID                 |
+|           |                                 |                  |                        |                        |                           |
+| V Richiamo| EMA                             | VALID o NOT_VALID| VALID o NOT_VALID      | VALID o NOT_VALID      | VALID o NOT_VALID         |
+| V Richiamo| NOT_EMA                         | NOT_VALID        | TEST_NEEDED o NOT_VALID| TEST_NEEDED o NOT_VALID| NOT_VALID                 |
+
+> **(!)** _A partire dal 6 Aprile 2022 le normative UE esentano i minori dal periodo di accettazione di 9 mesi per i loro certificati di vaccinazione, che siano stati rilasciati a seguito di completamento del ciclo vaccinale con vaccini approvati EMA._
+>
+> _Pertanto, **per quanto concerne la verifica in modalità INGRESSO IT di validità dei DGC V Ciclo con mp EMA, il controllo del periodo di accettazione si applica solamente alle persone di età pari o superiore a 18 anni**._
 
 Rispetto ai flussi dei casi Tampone e Guarigione è evidente una maggior complessità di gestione per tipologia DGC V parziale / ciclo completo / richiamo.
 
